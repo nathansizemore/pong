@@ -10,6 +10,31 @@ let p1_top = 0;
 let p2_top = 0;
 let ball = 0;
 
+let w_down = false;
+let s_down = false;
+let o_down = false;
+let l_down = false;
+window.onkeydown = function(e) {
+  if (e.code === "KeyW")
+    w_down = true;
+  else if (e.code === "KeyS")
+    s_down = true;
+  else if (e.code === "KeyO")
+    o_down = true;
+  else if (e.code === "KeyL")
+    l_down = true;
+};
+window.onkeyup = function(e) {
+  if (e.code === "KeyW")
+    w_down = false;
+  else if (e.code === "KeyS")
+    s_down = false;
+  else if (e.code === "KeyO")
+    o_down = false;
+  else if (e.code === "KeyL")
+    l_down = false;
+};
+
 function main() {
   window.requestAnimationFrame(main);
 
@@ -25,7 +50,21 @@ function adjust_for_input() {
 }
 
 function adjust_p1() {
+  if (w_down && s_down)
+    return;
 
+  let direction = 0;
+  if (w_down)
+    direction = -1;
+  else if (s_down)
+    direction = 1;
+
+  p1_top += direction * paddle_speed;
+
+  if (p1_top < 0)
+    p1_top = 0;
+  else if (p1_top + paddle_height > canvas.height)
+    p1_top = canvas.height - paddle_height;
 }
 
 function adjust_p2() {
