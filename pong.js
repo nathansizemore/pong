@@ -68,7 +68,21 @@ function adjust_p1() {
 }
 
 function adjust_p2() {
+  if (o_down && l_down)
+    return;
 
+  let direction = 0;
+  if (o_down)
+    direction = -1;
+  else if (l_down)
+    direction = 1;
+
+  p2_top += direction * paddle_speed;
+
+  if (p2_top < 0)
+    p2_top = 0;
+  else if (p2_top + paddle_height > canvas.height)
+    p2_top = canvas.height - paddle_height;
 }
 
 function move_ball() {
