@@ -12,8 +12,8 @@ const ball = {
   y: canvas.height / 2
 };
 const ball_velocity = {
-  x: (getRandomInt(2) == 0 ? -1 : 1) * ball_speed,
-  y: (getRandomInt(2) == 0 ? -1 : 1) * ball_speed
+  x: getRandomInt(2) == 0 ? -1 : 1,
+  y: getRandomInt(2) == 0 ? -1 : 1
 };
 
 let p1_top = 0;
@@ -95,7 +95,8 @@ function adjust_p2() {
 }
 
 function move_ball() {
-
+  const x = (ball.x + ball_velocity.x) * ball_speed;
+  const y = (ball.y + ball_velocity.y) * ball_speed;
 }
 
 function clear_screen() {
