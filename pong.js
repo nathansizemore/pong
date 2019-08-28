@@ -1,20 +1,31 @@
+
+
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
 const paddle_width = 5;
 const paddle_height = 40;
 const paddle_speed = 1;
+const ball_width = 3;
+const ball_height = 3;
 const ball_speed = 1;
+const ball = {
+  x: canvas.width / 2,
+  y: canvas.height / 2
+};
+const ball_velocity = {
+  x: (getRandomInt(2) == 0 ? -1 : 1) * ball_speed,
+  y: (getRandomInt(2) == 0 ? -1 : 1) * ball_speed
+};
 
 let p1_top = 0;
 let p2_top = 0;
-let ball = 0;
 
 let w_down = false;
 let s_down = false;
 let o_down = false;
 let l_down = false;
-window.onkeydown = function(e) {
+window.onkeydown = function (e) {
   if (e.code === "KeyW")
     w_down = true;
   else if (e.code === "KeyS")
@@ -24,7 +35,7 @@ window.onkeydown = function(e) {
   else if (e.code === "KeyL")
     l_down = true;
 };
-window.onkeyup = function(e) {
+window.onkeyup = function (e) {
   if (e.code === "KeyW")
     w_down = false;
   else if (e.code === "KeyS")
@@ -118,6 +129,11 @@ function draw_p2() {
 
 function draw_ball() {
   ctx.fillStyle = "white";
+  ctx.fillRect(ball.x, ball.y, ball_width, ball_height);
+}
+
+function getRandomInt(max) {
+  return Math.floor(Math.random() * Math.floor(max));
 }
 
 main();
