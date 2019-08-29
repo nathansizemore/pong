@@ -7,7 +7,7 @@ const paddle_speed = 1;
 
 const ball_width = 3;
 const ball_height = 3;
-const ball_speed = 0.2;
+const ball_speed = 1;
 const ball = {
   position: {
     x: canvas.width / 2,
@@ -50,8 +50,8 @@ window.onkeyup = function (e) {
     l_down = false;
 };
 
-function main() {
-  window.requestAnimationFrame(main);
+function pong() {
+  window.requestAnimationFrame(pong);
 
   adjust_for_input();
   move_ball();
@@ -214,4 +214,4 @@ function getRandomInt(max) {
   return Math.floor(Math.random() * Math.floor(max));
 }
 
-main();
+pong();
