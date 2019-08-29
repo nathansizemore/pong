@@ -7,7 +7,7 @@ const paddle_speed = 1;
 
 const ball_width = 3;
 const ball_height = 3;
-const ball_speed = 1;
+const ball_speed = 0.2;
 const ball = {
   position: {
     x: canvas.width / 2,
@@ -55,7 +55,7 @@ function main() {
 
   adjust_for_input();
   move_ball();
-  check_for_collisions();
+  adjust_for_collision();
   clear_screen();
   draw();
 }
@@ -151,7 +151,7 @@ function draw_ball() {
   ctx.fillRect(ball.position.x, ball.position.y, ball_width, ball_height);
 }
 
-function check_for_collisions() {
+function adjust_for_collision() {
   const x = ball.position.x;
   const y = ball.position.y;
 
@@ -164,10 +164,13 @@ function check_for_collisions() {
   } else if (hit_right_wall(x)) {
     p1_score += 1;
     reset_ball();
+  } else if (hit_p1_paddle(x, y)) {
+    ball.position.x = paddle_width;
+    ball.velocity.x *= -1;
+  } else if (hit_p2_paddle(x, y)) {
+    ball.position.x = canvas.width - paddle_width - ball_width;
+    ball.velocity.x *= -1;
   }
-
-  console.log(`p1: ${p1_score}`);
-  console.log(`p2: ${p2_score}`);
 }
 
 function hit_top_wall(y) {
@@ -186,12 +189,18 @@ function hit_right_wall(x) {
   return (x + ball_width) === canvas.width;
 }
 
-function hit_p1_paddle() {
+function hit_p1_paddle(x, y) {
+  const within_width = x <= paddle_width;
+  const within_height = y >= p1_top && y <= (p1_top + paddle_height);
 
+  return within_width && within_height;
 }
 
-function hit_p2_paddle() {
+function hit_p2_paddle(x, y) {
+  const within_width = (x + ball_width) >= (canvas.width - paddle_width);
+  const within_height = y >= p2_top && y <= (p2_top + paddle_height);
 
+  return within_width && within_height;
 }
 
 function reset_ball() {
