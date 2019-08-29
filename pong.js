@@ -14,7 +14,7 @@ const ball = {
     y: canvas.height / 2
   },
   velocity: {
-    x: 0,
+    x: getRandomInt(2) == 0 ? -1 : 1,
     y: getRandomInt(2) == 0 ? -1 : 1
   }
 };
@@ -158,7 +158,16 @@ function check_for_collisions() {
   if (hit_top_wall(y) || hit_bottom_wall(y))
     ball.velocity.y *= -1;
 
+  if (hit_left_wall(x)) {
+    p2_score += 1;
+    reset_ball();
+  } else if (hit_right_wall(x)) {
+    p1_score += 1;
+    reset_ball();
+  }
 
+  console.log(`p1: ${p1_score}`);
+  console.log(`p2: ${p2_score}`);
 }
 
 function hit_top_wall(y) {
@@ -170,12 +179,11 @@ function hit_bottom_wall(y) {
 }
 
 function hit_left_wall(x) {
-  p2_score += 1;
-
+  return x === 0;
 }
 
 function hit_right_wall(x) {
-
+  return (x + ball_width) === canvas.width;
 }
 
 function hit_p1_paddle() {
