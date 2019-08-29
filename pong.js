@@ -4,20 +4,26 @@ const ctx = canvas.getContext("2d");
 const paddle_width = 5;
 const paddle_height = 40;
 const paddle_speed = 1;
+
 const ball_width = 3;
 const ball_height = 3;
 const ball_speed = 1;
 const ball = {
-  x: canvas.width / 2,
-  y: canvas.height / 2
-};
-const ball_velocity = {
-  x: getRandomInt(2) == 0 ? -1 : 1,
-  y: getRandomInt(2) == 0 ? -1 : 1
+  position: {
+    x: canvas.width / 2,
+    y: canvas.height / 2
+  },
+  velocity: {
+    x: 0,
+    y: getRandomInt(2) == 0 ? -1 : 1
+  }
 };
 
 let p1_top = 0;
 let p2_top = 0;
+
+let p1_score = 0;
+let p2_score = 0;
 
 let w_down = false;
 let s_down = false;
@@ -49,6 +55,7 @@ function main() {
 
   adjust_for_input();
   move_ball();
+  check_for_collisions();
   clear_screen();
   draw();
 }
@@ -95,8 +102,21 @@ function adjust_p2() {
 }
 
 function move_ball() {
-  const x = (ball.x + ball_velocity.x) * ball_speed;
-  const y = (ball.y + ball_velocity.y) * ball_speed;
+  let x = ball.position.x + (ball.velocity.x * ball_speed);
+  let y = ball.position.y + (ball.velocity.y * ball_speed);
+
+  if (x < 0)
+    x = 0;
+  else if ((x + ball_width) > canvas.width)
+    x = canvas.width - ball_width;
+
+  if (y < 0)
+    y = 0;
+  else if ((y + ball_height) > canvas.height)
+    y = canvas.height - ball_height;
+
+  ball.position.x = x;
+  ball.position.y = y;
 }
 
 function clear_screen() {
@@ -128,7 +148,49 @@ function draw_p2() {
 
 function draw_ball() {
   ctx.fillStyle = "white";
-  ctx.fillRect(ball.x, ball.y, ball_width, ball_height);
+  ctx.fillRect(ball.position.x, ball.position.y, ball_width, ball_height);
+}
+
+function check_for_collisions() {
+  const x = ball.position.x;
+  const y = ball.position.y;
+
+  if (hit_top_wall(y) || hit_bottom_wall(y))
+    ball.velocity.y *= -1;
+
+
+}
+
+function hit_top_wall(y) {
+  return y === 0;
+}
+
+function hit_bottom_wall(y) {
+  return (y + ball_height) === canvas.height;
+}
+
+function hit_left_wall(x) {
+  p2_score += 1;
+
+}
+
+function hit_right_wall(x) {
+
+}
+
+function hit_p1_paddle() {
+
+}
+
+function hit_p2_paddle() {
+
+}
+
+function reset_ball() {
+  ball.position.x = canvas.width / 2;
+  ball.position.y = canvas.height / 2;
+  ball.velocity.x = getRandomInt(2) == 0 ? -1 : 1;
+  ball.velocity.y = getRandomInt(2) == 0 ? -1 : 1;
 }
 
 function getRandomInt(max) {
