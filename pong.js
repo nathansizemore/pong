@@ -9,7 +9,7 @@ const paddle_speed = 5;
 
 const ball_width = canvas.width * 0.007;
 const ball_height = ball_width;
-const ball_speed = 5;
+const ball_speed = 10;
 const ball = {
   position: {
     x: (canvas.width / 2) - (ball_width / 2),
