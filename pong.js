@@ -3,12 +3,12 @@ const ctx = canvas.getContext("2d");
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-const paddle_width = canvas.width * 0.01;
-const paddle_height = canvas.height * 0.20;
+let paddle_width = canvas.width * 0.01;
+let paddle_height = canvas.height * 0.20;
 const paddle_speed = 5;
 
-const ball_width = canvas.width * 0.007;
-const ball_height = ball_width;
+let ball_width = canvas.width * 0.007;
+let ball_height = ball_width;
 const ball_speed = 10;
 const ball = {
   position: {
@@ -19,6 +19,17 @@ const ball = {
     x: getRandomInt(2) == 0 ? -1 : 1,
     y: getRandomInt(2) == 0 ? -1 : 1
   }
+};
+
+window.onresize = function () {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  paddle_width = canvas.width * 0.01;
+  paddle_height = canvas.height * 0.20;
+
+  ball_width = canvas.width * 0.007;
+  ball_height = ball_width;
 };
 
 let p1_top = 0;
