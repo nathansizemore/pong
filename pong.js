@@ -1,13 +1,15 @@
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
 
-const paddle_width = 5;
-const paddle_height = 40;
-const paddle_speed = 1;
+const paddle_width = canvas.width * 0.01;
+const paddle_height = canvas.height * 0.20;
+const paddle_speed = 5;
 
-const ball_width = 3;
-const ball_height = 3;
-const ball_speed = 1;
+const ball_width = canvas.width * 0.007;
+const ball_height = ball_width;
+const ball_speed = 5;
 const ball = {
   position: {
     x: (canvas.width / 2) - (ball_width / 2),
