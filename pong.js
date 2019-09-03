@@ -60,7 +60,6 @@ let p2_top = 0;
 
 let p1_score = 0;
 let p2_score = 0;
-let game_over = false;
 const winning_number = 10;
 
 let w_down = false;
@@ -89,24 +88,25 @@ window.onkeyup = function (e) {
 };
 
 function pong() {
-  check_for_game_over();
+  if (game_over()) {
+    show_win_screen();
+    return;
+  }
+
   adjust_for_input();
   move_ball();
   adjust_for_collision();
   clear_screen();
   draw();
 
-  if (game_over)
-    show_game_over();
-  else
-    window.requestAnimationFrame(pong);
+  window.requestAnimationFrame(pong);
 }
 
-function check_for_game_over() {
-  game_over = p1_score === winning_number || p2_score === winning_number;
+function game_over() {
+  return p1_score === winning_number || p2_score === winning_number;
 }
 
-function show_game_over() {
+function show_win_screen() {
   let player = 1;
   if (p2_score === winning_number)
     player = 2;
