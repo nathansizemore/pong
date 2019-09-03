@@ -16,8 +16,8 @@ const ball = {
     y: (canvas.height / 2) - (ball_height / 2)
   },
   velocity: {
-    x: getRandomInt(2) == 0 ? -1 : 1,
-    y: getRandomInt(2) == 0 ? -1 : 1
+    x: random_int(2) == 0 ? -1 : 1,
+    y: random_int(2) == 0 ? -1 : 1
   }
 };
 
@@ -249,11 +249,11 @@ function hit_p2_paddle(x, y) {
 function reset_ball() {
   ball.position.x = (canvas.width / 2) - (ball_width / 2);
   ball.position.y = canvas.height / 2 - (ball_height / 2);
-  ball.velocity.x = getRandomInt(2) == 0 ? -1 : 1;
-  ball.velocity.y = getRandomInt(2) == 0 ? -1 : 1;
+  ball.velocity.x = random_int(2) == 0 ? -1 : 1;
+  ball.velocity.y = random_int(2) == 0 ? -1 : 1;
 }
 
-function getRandomInt(max) {
+function random_int(max) {
   return Math.floor(Math.random() * Math.floor(max));
 }
 
