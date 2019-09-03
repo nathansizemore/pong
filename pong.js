@@ -96,10 +96,10 @@ function pong() {
   clear_screen();
   draw();
 
-  if (!game_over)
-    window.requestAnimationFrame(pong);
-  else
+  if (game_over)
     show_game_over();
+  else
+    window.requestAnimationFrame(pong);
 }
 
 function check_for_game_over() {
