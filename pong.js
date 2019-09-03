@@ -37,6 +37,8 @@ let p2_top = 0;
 
 let p1_score = 0;
 let p2_score = 0;
+let game_over = false;
+const winning_number = 10;
 
 let w_down = false;
 let s_down = false;
@@ -64,13 +66,34 @@ window.onkeyup = function (e) {
 };
 
 function pong() {
-  window.requestAnimationFrame(pong);
-
+  check_for_game_over();
   adjust_for_input();
   move_ball();
   adjust_for_collision();
   clear_screen();
   draw();
+
+  if (!game_over)
+    window.requestAnimationFrame(pong);
+  else
+    show_game_over();
+}
+
+function check_for_game_over() {
+  game_over = p1_score === winning_number || p2_score === winning_number;
+}
+
+function show_game_over() {
+  let player = 1;
+  if (p2_score === winning_number)
+    player = 2;
+
+  clear_screen();
+
+  ctx.font = "50px bold monospace";
+  ctx.textAlign = "center";
+  ctx.fillStyle = "white";
+  ctx.fillText(`Player ${player} Wins!`, canvas.width / 2, canvas.height / 2);
 }
 
 function adjust_for_input() {
@@ -141,6 +164,7 @@ function draw() {
   draw_p1();
   draw_p2();
   draw_ball();
+  draw_scores();
 }
 
 function draw_p1() {
@@ -162,6 +186,12 @@ function draw_p2() {
 function draw_ball() {
   ctx.fillStyle = "white";
   ctx.fillRect(ball.position.x, ball.position.y, ball_width, ball_height);
+}
+
+function draw_scores() {
+  ctx.font = "50px bold monospace";
+  ctx.fillText(`${p1_score}`, canvas.width / 4, 50);
+  ctx.fillText(`${p2_score}`, (canvas.width / 4) * 3, 50);
 }
 
 function adjust_for_collision() {
